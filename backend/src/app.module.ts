@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { PdfModule } from './pdf/pdf.module';
 import { HealthController } from './health/health.controller';
 import { TcgModule } from './tcg/tcg.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -14,6 +15,7 @@ import { TcgModule } from './tcg/tcg.module';
     UsersModule,
     PdfModule,
     TcgModule,
+    AuthModule,
   ],
   controllers: [HealthController],
 })

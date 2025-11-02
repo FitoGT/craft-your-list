@@ -68,15 +68,3 @@ backend/.tsbuildinfo
 .venv/
 __pycache__/
 
-# macOS
-.AppleDouble
-.Spotlight-V100
-.Trashes
-Icon?
-
-# === Misc ===
-# Ignore editor backups
-*~
-# Ignore lockfiles if you want (optional)
-# package-lock.json
-# yarn.lock
