@@ -16,6 +16,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   nationality!: string;
 
+  @IsString()
+  @IsNotEmpty()
+  passwordHash!: string;
+
   @IsEmail()
   @IsNotEmpty()
   email!: string;
