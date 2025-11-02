@@ -1,0 +1,82 @@
+# === Node & Dependencies ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === Build outputs ===
+dist/
+build/
+.next/
+out/
+coverage/
+.temp/
+.cache/
+.vite/
+
+# === TypeScript compiled files ===
+**/*.tsbuildinfo
+**/*.js
+**/*.js.map
+
+# === Environment & Secrets ===
+.env
+.env.*.local
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# === Logs & temporary ===
+logs/
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# === IDEs & OS ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# === Frontend specific ===
+frontend/.eslintcache
+frontend/.next/
+frontend/.turbo/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/coverage/
+
+# === Backend specific ===
+backend/node_modules/
+backend/dist/
+backend/.env
+backend/coverage/
+backend/.tsbuildinfo
+
+# === Optional tools ===
+# Python virtual envs (if any scripts)
+.venv/
+__pycache__/
+
+# macOS
+.AppleDouble
+.Spotlight-V100
+.Trashes
+Icon?
+
+# === Misc ===
+# Ignore editor backups
+*~
+# Ignore lockfiles if you want (optional)
+# package-lock.json
+# yarn.lock

@@ -1,0 +1,23 @@
+{
+  "pokemon": {
+    "qtyX": 58,
+    "nameX": 88,
+    "firstRowY": 698,
+    "rowHeight": 14.1,
+    "rows": 20
+  },
+  "trainer": {
+    "qtyX": 58,
+    "nameX": 88,
+    "firstRowY": 404,
+    "rowHeight": 14.1,
+    "rows": 20
+  },
+  "energy": {
+    "qtyX": 58,
+    "nameX": 88,
+    "firstRowY": 128,
+    "rowHeight": 14.1,
+    "rows": 10
+  }
+}
