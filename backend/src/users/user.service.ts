@@ -13,6 +13,7 @@ export class UsersService {
         lastname: dto.lastname,
         birthdate: new Date(dto.birthdate),
         nationality: dto.nationality,
+        email: dto.email,
       },
     });
   }

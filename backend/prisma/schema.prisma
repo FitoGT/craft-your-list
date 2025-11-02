@@ -13,6 +13,29 @@ model User {
   lastname     String
   birthdate    DateTime
   nationality  String
+  email        String   @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  pokemonInfo  PokemonUserInfo?
+  yugiohInfo   YugiohUserInfo?
+}
+
+model PokemonUserInfo {
+  userId    String  @id
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  playerId  String  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model YugiohUserInfo {
+  userId    String  @id
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  konamiId  String  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

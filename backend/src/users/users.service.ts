@@ -12,6 +12,7 @@ export class UsersService {
         name: dto.name,
         lastname: dto.lastname,
         birthdate: new Date(dto.birthdate),
+        email: dto.email,
         nationality: dto.nationality,
       },
     });
