@@ -1,16 +1,36 @@
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { useGenerateDecklist } from './hooks/useCreateDecklist';
 
 export default function CreateDecklist() {
   const { tcg } = useParams<{ tcg: 'pokemon' | 'yugioh' | 'mtg' }>();
   const [raw, setRaw] = useState('');
+  const generateDecklist = useGenerateDecklist();
+
 
   const onCreate = () => {
     if (tcg !== 'pokemon') {
       alert('Por ahora solo soportamos Pokémon 🙂');
       return;
     }
-    console.log('Crear decklist Pokémon con:', raw);
+
+    generateDecklist.mutate(
+      { rawList: raw },
+      {
+        onSuccess: (blob) => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'decklist.pdf';
+          a.click();
+          URL.revokeObjectURL(url);
+        },
+        onError: (err) => {
+          console.error(err);
+          alert('Error generando el PDF.');
+        },
+      }
+    );
   };
 
   const disabled = !raw.trim();

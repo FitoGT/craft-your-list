@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="min-h-[calc(100vh-56px)] grid place-items-center bg-gray-50">
       <div className="max-w-5xl w-full px-6">
-        <h1 className="text-3xl font-semibold text-center mb-8">Elige tu TCG</h1>
+        <h1 className="text-3xl font-semibold text-center mb-8">Pick your TCG</h1>
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-3">
           {tiles.map(t => (
             <button

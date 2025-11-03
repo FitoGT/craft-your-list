@@ -29,7 +29,7 @@ export default function Navbar() {
                 value={password} onChange={(e) => setPassword(e.target.value)}
               />
               <button
-                onClick={() => login.mutate({ email, password }, { onSuccess: () => nav('/decklists') })}
+                onClick={() => login.mutate({ email, password }, { onSuccess: () => nav('/') })}
                 className="bg-white text-gray-900 rounded px-3 py-1.5 text-sm font-medium hover:opacity-90"
               >
                 Iniciar sesión
