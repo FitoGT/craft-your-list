@@ -32,23 +32,23 @@ export default function Navbar() {
                 onClick={() => login.mutate({ email, password }, { onSuccess: () => nav('/') })}
                 className="bg-white text-gray-900 rounded px-3 py-1.5 text-sm font-medium hover:opacity-90"
               >
-                Iniciar sesión
+                Log in
               </button>
               <Link
                 to="/register"
                 className="bg-gray-100 text-gray-900 rounded px-3 py-1.5 text-sm font-medium hover:opacity-90"
               >
-                Registrarse
+                Sign Up
               </Link>
             </>
           ) : (
             <div className="flex items-center gap-3">
-              <span className="text-sm">Hola, <b>{user.name}</b> 👋</span>
+              <span className="text-sm">Hi, <b>{user.name}</b> 👋</span>
               <button
                 onClick={() => { logout(); nav('/'); }}
                 className="text-sm underline underline-offset-2"
               >
-                Salir
+                Log out
               </button>
             </div>
           )}
