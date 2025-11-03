@@ -25,14 +25,13 @@ export class PdfController {
     let fields: Record<string, string | boolean> | undefined;
 
     if (dto.userId) {
-      const userData = await this.user.findOne(dto.userId);
-
+      const userData = await this.user.findOneWithPokemon(dto.userId)
       if (!userData) {
         throw new NotFoundException(`User with ID ${dto.userId} not found`);
       }
 
       const player_name = [userData.name, userData.lastname].filter(Boolean).join(' ').trim();
-      const player_id = (userData as any)?.popId ?? userData.id;
+      const player_id = userData.pokemonInfo?.playerId ?? '';
 
       const birthdate = new Date(userData.birthdate);
       const { month, day, year } = splitBirthdateParts(birthdate);

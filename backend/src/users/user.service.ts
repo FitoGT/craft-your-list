@@ -12,8 +12,13 @@ export class UsersService {
   }
 
   async findOne(id: string) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async findOneWithPokemon(id: string) {
     return this.prisma.user.findUnique({
       where: { id },
+      include: { pokemonInfo: true },
     });
   }
 
