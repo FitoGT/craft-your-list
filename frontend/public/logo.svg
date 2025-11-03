@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 64" role="img" aria-label="Craft Your List — logo">
+  <defs>
+    <radialGradient id="orb" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8AF7FF"></stop>
+      <stop offset="45%" stop-color="#6A7CFF"></stop>
+      <stop offset="85%" stop-color="#8A3BFF"></stop>
+      <stop offset="100%" stop-color="#1A103B"></stop>
+    </radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE58A"></stop>
+      <stop offset="100%" stop-color="#FF7BD4"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Icono (mini Fusion Orb) -->
+  <g transform="translate(8,8)">
+    <!-- órbita -->
+    <ellipse cx="24" cy="28" rx="16" ry="9.6" fill="none" stroke="#8A3BFF" stroke-width="1.5" opacity="0.6"></ellipse>
+    <!-- orbe -->
+    <circle cx="24" cy="24" r="12" fill="url(#orb)"></circle>
+    <circle cx="24" cy="24" r="12" fill="none" stroke="#CFA7FF" stroke-width="1" opacity="0.7"></circle>
+    <!-- cartas -->
+    <g transform="translate(14,14) rotate(-15)">
+      <rect x="-3.6" y="-4.8" width="7.2" height="9.6" rx="1.2" fill="#141029" stroke="url(#edge)" stroke-width="1"></rect>
+      <circle cx="0" cy="0" r="1.2" fill="#FFD86B"></circle>
+    </g>
+    <g transform="translate(32,22) rotate(12)">
+      <rect x="-3.6" y="-4.8" width="7.2" height="9.6" rx="1.2" fill="#141029" stroke="url(#edge)" stroke-width="1"></rect>
+      <rect x="-1.2" y="-1.4" width="2.4" height="3.2" rx="0.5" fill="#9AF27A"></rect>
+    </g>
+    <g transform="translate(18,34) rotate(18)">
+      <rect x="-3.6" y="-4.8" width="7.2" height="9.6" rx="1.2" fill="#141029" stroke="url(#edge)" stroke-width="1"></rect>
+      <circle cx="0" cy="0.2" r="1.2" fill="#7CD0FF"></circle>
+    </g>
+    <!-- chispa -->
+    <circle cx="39" cy="10" r="1.8" fill="#FFE58A"></circle>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(72,42)">
+    <text x="0" y="0" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="28" font-weight="700" fill="#E7E6F5" letter-spacing="0.2">
+      Craft Your List
+    </text>
+    <!-- acento sutil -->
+    <rect x="2" y="6" width="210" height="3" rx="1.5" fill="#8A3BFF" opacity="0.55"></rect>
+  </g>
+</svg>

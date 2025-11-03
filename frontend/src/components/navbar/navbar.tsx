@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-gray-900 text-gray-100">
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-4">
-        <Link to="/" className="font-semibold tracking-wide">craft-your-list</Link>
+        <Link to="/" className="font-semibold tracking-wide"><img src="/logo.svg" alt="Craft Your List" className="h-12 w-auto" /></Link>
 
         <div className="ml-auto flex items-center gap-3">
           {!user ? (
