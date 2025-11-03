@@ -43,7 +43,7 @@ export default function Navbar() {
             </>
           ) : (
             <div className="flex items-center gap-3">
-              <span className="text-sm">Hi, <b>{user.name}</b> 👋</span>
+              <Link to={`/user/${user.id}`} className="font-semibold tracking-wide"><span className="text-sm">Hi, <b>{user.name}</b> 👋</span></Link>
               <button
                 onClick={() => { logout(); nav('/'); }}
                 className="text-sm underline underline-offset-2"
