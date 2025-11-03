@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from '../../components/forms/Input';
@@ -30,13 +31,14 @@ type FormData = z.infer<typeof schema>;
 export default function Register() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
   const mutation = useRegister();
+  const navigate = useNavigate();
   const tcg = watch('tcg');
 
   return (
     <Container>
       <h1 className="text-2xl font-semibold">Create your account</h1>
       <form
-        onSubmit={handleSubmit((d) => mutation.mutate(d))}
+        onSubmit={handleSubmit((d) => mutation.mutate(d, { onSuccess: () => navigate('/') }))}
         className="space-y-4"
       >
         <div className="grid grid-cols-2 gap-3">

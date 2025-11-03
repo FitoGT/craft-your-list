@@ -26,3 +26,8 @@ export const logout = () => {
   localStorage.removeItem('auth_token');
   localStorage.removeItem('auth_user');
 };
+
+export const getCurrentUser = (): { name: string } | null => {
+  const raw = localStorage.getItem('auth_user');
+  try { return raw ? JSON.parse(raw) : null; } catch { return null; }
+};
