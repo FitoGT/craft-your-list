@@ -10,7 +10,17 @@ type Row = { qty: number; name: string; set?: string; num?: string };
 export class PdfService {
   private templatePath = path.join(__dirname, '..', 'templates', 'pokemon-decklist.pdf');
 
-  async render(deck: ParsedDeck): Promise<Buffer> {
+  private readonly TEXT_FIELDS = new Set([
+    'pokemon', 'trainer', 'energy', // sections
+    'player_name', 'player_id', 'month', 'day', 'year', // player data
+  ]);
+
+  private readonly CHECKBOX_FIELDS = new Set(['junior', 'senior', 'master']);
+
+  async render(
+    deck: ParsedDeck,
+    fields?: Record<string, string | boolean>
+  ): Promise<Buffer> {
     const bytes = fs.readFileSync(this.templatePath);
     const pdfDoc = await PDFDocument.load(bytes);
     const form = pdfDoc.getForm();
@@ -18,28 +28,54 @@ export class PdfService {
     const rowText = (r: Row) =>
       r.set && r.num ? `${r.qty} ${r.name}  ${r.set} ${r.num}` : `${r.qty} ${r.name}`;
 
-    const fillSection = (fieldName: 'pokemon' | 'trainer' | 'energy', rows: Row[]) => {
-      let field;
+    const fillMultilineText = (name: 'pokemon' | 'trainer' | 'energy', rows: Row[]) => {
+      let tf;
       try {
-        field = form.getTextField(fieldName);
+        tf = form.getTextField(name);
       } catch {
-        throw new Error(`El campo de formulario "${fieldName}" no existe en la plantilla PDF.`);
+        throw new Error(`El campo de formulario "${name}" no existe en la plantilla PDF.`);
       }
-      const text = rows.map(rowText).join('\n');
-      field.setText(text);
-      try {
-        // @ts-ignore
-        field.setMultiline?.(true);
-      } catch { }
+      tf.setText(rows.map(rowText).join('\n'));
+      // @ts-ignore
+      tf.setMultiline?.(true);
     };
 
-    fillSection('pokemon', deck.pokemon);
-    fillSection('trainer', deck.trainer);
-    fillSection('energy', deck.energy);
+    fillMultilineText('pokemon', deck.pokemon);
+    fillMultilineText('trainer', deck.trainer);
+    fillMultilineText('energy', deck.energy);
+
+    if (fields) {
+      for (const [name, value] of Object.entries(fields)) {
+        if (this.TEXT_FIELDS.has(name)) {
+          try {
+            const tf = form.getTextField(name);
+            tf.setText(String(value ?? ''));
+          } catch {
+            throw new Error(`El TextField "${name}" no existe en el PDF (revisa el nombre en el template).`);
+          }
+          continue;
+        }
+
+        if (this.CHECKBOX_FIELDS.has(name)) {
+          try {
+            const cb = form.getCheckBox(name);
+            const v = typeof value === 'boolean'
+              ? value
+              : typeof value === 'string'
+                ? ['yes', 'on', 'true', '1'].includes(value.toLowerCase())
+                : false;
+            v ? cb.check() : cb.uncheck();
+          } catch {
+            throw new Error(`El CheckBox "${name}" no existe en el PDF (revisa el nombre en el template).`);
+          }
+          continue;
+        }
+
+      }
+    }
 
     const helv = await pdfDoc.embedFont(StandardFonts.Helvetica);
     form.updateFieldAppearances(helv);
-
     const out = await pdfDoc.save();
     return Buffer.from(out);
   }
