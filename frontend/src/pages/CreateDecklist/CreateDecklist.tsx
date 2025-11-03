@@ -1,12 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useGenerateDecklist } from './hooks/useCreateDecklist';
+import { getCurrentUser } from '../../hooks/useAuth';
+import type { DecklistPayload } from './types';
 
 export default function CreateDecklist() {
   const { tcg } = useParams<{ tcg: 'pokemon' | 'yugioh' | 'mtg' }>();
   const [raw, setRaw] = useState('');
   const generateDecklist = useGenerateDecklist();
-
+  const user = getCurrentUser();
 
   const onCreate = () => {
     if (tcg !== 'pokemon') {
@@ -14,23 +16,25 @@ export default function CreateDecklist() {
       return;
     }
 
-    generateDecklist.mutate(
-      { rawList: raw },
-      {
-        onSuccess: (blob) => {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'decklist.pdf';
-          a.click();
-          URL.revokeObjectURL(url);
-        },
-        onError: (err) => {
-          console.error(err);
-          alert('Error generando el PDF.');
-        },
-      }
-    );
+    const payload: DecklistPayload = {
+      rawList: raw,
+      userId: user?.id, // opcional
+    };
+
+    generateDecklist.mutate(payload, {
+      onSuccess: (blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'decklist.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      onError: (err) => {
+        console.error(err);
+        alert('Error generando el PDF.');
+      },
+    });
   };
 
   const disabled = !raw.trim();
@@ -55,7 +59,7 @@ export default function CreateDecklist() {
         <div className="flex items-center justify-end gap-3">
           <button
             onClick={onCreate}
-            disabled={disabled}
+            disabled={disabled || tcg !== 'pokemon'}
             className="rounded-lg px-4 py-2 bg-black text-white disabled:opacity-50 hover:opacity-90"
           >
             Crear decklist
