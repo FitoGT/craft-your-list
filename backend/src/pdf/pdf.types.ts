@@ -1,11 +1,14 @@
-import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+export type SupportedTCG = 'pokemon' | 'yugioh';
 
-export class DecklistDto {
-  @IsString()
-  @IsNotEmpty()
-  rawList!: string;
+export type CommonFields = Record<string, string | boolean | number | undefined>;
 
-  @IsOptional()
-  @IsString()
-  userId?: string
+export interface GamePdfStrategy {
+  /** Identificador del TCG */
+  readonly tcg: SupportedTCG;
+
+  parse(raw: string): unknown;
+
+  render(parsed: unknown, extraFields?: CommonFields): Promise<Buffer>;
+
+  listFields?(): Promise<string[]>;
 }
