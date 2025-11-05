@@ -41,7 +41,5 @@ Paste your decklist text, and the app will parse, structure, and fill the offici
 - 👤 **User-based autofill** for player data (Name, ID, Birthdate, Division, etc.)
 - 🧱 Modular architecture — easily extendable for more TCGs (e.g., MTG)
 
----
 
-## 🗂️ Project Structure
 
