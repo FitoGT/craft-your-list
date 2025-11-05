@@ -21,7 +21,7 @@ export class PdfService {
 
   private get(tcg: SupportedTCG): GamePdfStrategy {
     const strat = this.strategies.get(tcg);
-    if (!strat) throw new Error(`No hay estrategia PDF registrada para ${tcg}`);
+    if (!strat) throw new Error(`${tcg} strategy not registered`);
     return strat;
   }
 
