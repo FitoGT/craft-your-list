@@ -11,14 +11,12 @@ export default function CreateDecklist() {
   const user = getCurrentUser();
 
   const onCreate = () => {
-    if (tcg !== 'pokemon') {
-      alert('Por ahora solo soportamos Pokémon 🙂');
-      return;
-    }
+
 
     const payload: DecklistPayload = {
       rawList: raw,
-      userId: user?.id, // opcional
+      userId: user?.id,
+      tcg
     };
 
     generateDecklist.mutate(payload, {
@@ -36,8 +34,6 @@ export default function CreateDecklist() {
       },
     });
   };
-
-  const disabled = !raw.trim();
 
   return (
     <div className="min-h-[calc(100vh-56px)] bg-gray-50 py-8">
@@ -59,18 +55,13 @@ export default function CreateDecklist() {
         <div className="flex items-center justify-end gap-3">
           <button
             onClick={onCreate}
-            disabled={disabled || tcg !== 'pokemon'}
             className="rounded-lg px-4 py-2 bg-black text-white disabled:opacity-50 hover:opacity-90"
           >
             Crear decklist
           </button>
         </div>
 
-        {tcg !== 'pokemon' && (
-          <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded p-3">
-            Soporte de {tcg?.toUpperCase()} aún no está listo. Próximamente 🚧
-          </p>
-        )}
+
       </div>
     </div>
   );

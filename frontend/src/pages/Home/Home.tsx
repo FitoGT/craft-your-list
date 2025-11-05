@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 const tiles = [
   { key: 'pokemon', label: 'Pokémon', img: '/pokemon.png' },
   { key: 'yugioh', label: 'Yu-Gi-Oh!', img: '/yugioh.png' },
-  { key: 'mtg', label: 'Magic: The Gathering', img: '/magic.webp' },
 ] as const;
 
 export default function Home() {
@@ -16,7 +15,7 @@ export default function Home() {
           Pick your TCG
         </h1>
 
-        <div className="grid gap-8 grid-cols-1 sm:grid-cols-3">
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2">
           {tiles.map((t) => (
             <button
               key={t.key}
