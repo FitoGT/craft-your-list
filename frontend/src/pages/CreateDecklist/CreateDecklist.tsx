@@ -39,16 +39,16 @@ export default function CreateDecklist() {
     <div className="min-h-[calc(100vh-56px)] bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">Nuevo decklist</h2>
+          <h2 className="text-2xl font-semibold">New Decklist</h2>
           <span className="text-sm px-2 py-1 bg-gray-100 rounded border">{tcg?.toUpperCase()}</span>
         </div>
 
-        <label className="block text-sm font-medium">Pega tu lista</label>
+        <label className="block text-sm font-medium">Paste your list</label>
         <textarea
           rows={14}
           value={raw}
           onChange={(e) => setRaw(e.target.value)}
-          placeholder={`Pega aquí tu export de ${tcg?.toUpperCase()}`}
+          placeholder={`Paste here your export of ${tcg?.toUpperCase()}`}
           className="w-full border rounded-lg p-3 font-mono text-sm outline-none focus:ring-2 focus:ring-gray-300"
         />
 
@@ -57,7 +57,7 @@ export default function CreateDecklist() {
             onClick={onCreate}
             className="rounded-lg px-4 py-2 bg-black text-white disabled:opacity-50 hover:opacity-90"
           >
-            Crear decklist
+            Generate
           </button>
         </div>
 

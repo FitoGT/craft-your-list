@@ -15,7 +15,7 @@ function Layout() {
 
 const router = createBrowserRouter([
   {
-    element: <Layout />, // layout con Navbar
+    element: <Layout />,
     children: [
       { path: '/', element: <Home /> },
       { path: '/register', element: <Register /> },
