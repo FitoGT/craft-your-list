@@ -17,6 +17,8 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: async (data: RegisterData) => {
       const res = await api.post('/auth/register', data);
+      localStorage.setItem('auth_token', res.data.token);
+      localStorage.setItem('auth_user', JSON.stringify(res.data.user));
       return res.data;
     },
   });

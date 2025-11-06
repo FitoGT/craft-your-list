@@ -12,15 +12,6 @@ export const useLogin = () =>
     },
   });
 
-export const useRegister = () =>
-  useMutation({
-    mutationFn: async (payload: any) => {
-      const { data } = await api.post('/auth/register', payload);
-      localStorage.setItem('auth_token', data.token);
-      localStorage.setItem('auth_user', JSON.stringify(data.user));
-      return data;
-    },
-  });
 
 export const logout = () => {
   localStorage.removeItem('auth_token');
