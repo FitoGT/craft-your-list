@@ -1,6 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+
+type UserData = {
+  name?: string;
+  lastname?: string;
+  email?: string;
+  nationality?: string;
+  birthdate?: Date;
+}
 
 @Injectable()
 export class UsersService {
@@ -34,16 +42,43 @@ export class UsersService {
 
   async update(id: string, dto: UpdateUserDto) {
     const exists = await this.prisma.user.findUnique({ where: { id } });
+    const yugiohInfo = await this.prisma.yugiohUserInfo.findUnique({ where: { userId: id } });
+    const pokemonInfo = await this.prisma.pokemonUserInfo.findUnique({ where: { userId: id } });
     if (!exists) throw new NotFoundException('User not found');
 
-    const { pokemonInfo, yugiohInfo, birthdate, ...rest } = dto;
+    const { birthdate, pokemonInfo: pokemonInfoDto, yugiohInfo: yugiohInfoDto, ...rest } = dto as any;
+    console.log('Updating user', id, dto, { yugiohInfo, pokemonInfo });
 
-    const data: any = { ...rest };
+    const data: any = { ...rest } as UserData;
     if (birthdate) data.birthdate = new Date(birthdate);
 
-    return this.prisma.user.update({
-      where: { id },
-      data,
-    });
+    if (yugiohInfoDto) {
+      const { konamiId } = yugiohInfoDto as { konamiId?: string };
+      if (konamiId) {
+        if (yugiohInfo) {
+          data.yugiohInfo = { update: { konamiId } };
+        } else {
+          data.yugiohInfo = { create: { konamiId } };
+        }
+      }
+    }
+
+    if (pokemonInfoDto) {
+      const { playerId } = pokemonInfoDto as { playerId?: string };
+      if (playerId) {
+        const existingByPlayer = await this.prisma.pokemonUserInfo.findUnique({ where: { playerId } });
+        if (existingByPlayer && existingByPlayer.userId !== id) {
+          throw new ConflictException('playerId already associated with another user');
+        }
+
+        if (pokemonInfo) {
+          data.pokemonInfo = { update: { playerId } };
+        } else {
+          data.pokemonInfo = { create: { playerId } };
+        }
+      }
+    }
+
+    return this.prisma.user.update({ where: { id }, data });
   }
 }

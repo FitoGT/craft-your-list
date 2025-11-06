@@ -38,7 +38,7 @@ export default function FormUser(props: Props) {
       name: '', lastname: '', email: '',
       birthdate: '', nationality: '',
       tcg: 'pokemon', playerId: '', konamiId: '',
-      password: '', // solo se usa en create
+      password: '',
       ...(props.initialValues || {}),
     },
   });
@@ -50,10 +50,8 @@ export default function FormUser(props: Props) {
 
   const tcg = watch('tcg');
 
-  // Encapsulamos para tipar bien la salida según el modo
   const onSubmit = (values: CommonFormData) => {
     if (isCreate) {
-      // password es requerido por createSchema, así que existe
       props.onSubmit(values as CreateFormData);
     } else {
       props.onSubmit(values as EditFormData);
@@ -74,7 +72,7 @@ export default function FormUser(props: Props) {
         <Input label="Nationality" register={register('nationality')} error={errors.nationality} />
       </div>
 
-      <SelectTCG register={register('tcg')} watch={watch} />
+      <SelectTCG register={register('tcg')} />
 
       {tcg === 'pokemon' && (
         <Input label="Player ID" register={register('playerId')} error={errors.playerId} />

@@ -60,8 +60,6 @@ export default function CreateDecklist() {
             Generate
           </button>
         </div>
-
-
       </div>
     </div>
   );
