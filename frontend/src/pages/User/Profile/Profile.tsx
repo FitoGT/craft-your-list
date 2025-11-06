@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-
+import toast, { Toaster } from 'react-hot-toast';
 import { Container } from '../../../components/layout/layout';
 import FormUser from '../components/formUser';
 import { useUser } from '../hooks/useUser';
@@ -36,31 +36,21 @@ export default function Profile() {
     updateUser.mutate(payload, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['user', id] });
+        toast.success('Profile updated succesfully');
       },
+      onError: (e: unknown) => {
+        let message = 'Error updating your profile';
+        if (typeof e === 'object' && e !== null && 'response' in e) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const resp = (e as any).response;
+          if (resp?.data?.message) {
+            message = resp.data.message;
+          }
+        }
+        toast.error(message);
+      }
     });
   };
-
-  if (!id) {
-    return (
-      <Container>
-        <p className="text-red-600">Falta el id de usuario en la URL.</p>
-      </Container>
-    );
-  }
-
-  if (isLoading)
-    return (
-      <Container>
-        <p>Cargando perfil…</p>
-      </Container>
-    );
-
-  if (error || !data)
-    return (
-      <Container>
-        <p className="text-red-600">No se pudo cargar el usuario.</p>
-      </Container>
-    );
 
   const initial = {
     name: data.name,
@@ -79,12 +69,15 @@ export default function Profile() {
 
   return (
     <Container>
-      <h1 className="text-2xl font-semibold">Tu perfil</h1>
+      <h1 className="text-2xl font-semibold">Your Profile</h1>
       <FormUser
         mode="edit"
         initialValues={initial}
         submitting={updateUser.isPending}
-        onSubmit={handleUpdateUser} // 👈 usamos la función aquí
+        onSubmit={handleUpdateUser}
+      />
+      <Toaster
+        position="top-right"
       />
     </Container>
   );

@@ -68,7 +68,7 @@ export class UsersService {
       if (playerId) {
         const existingByPlayer = await this.prisma.pokemonUserInfo.findUnique({ where: { playerId } });
         if (existingByPlayer && existingByPlayer.userId !== id) {
-          throw new ConflictException('playerId already associated with another user');
+          throw new ConflictException({ message: 'playerId already associated with another user' });
         }
 
         if (pokemonInfo) {
